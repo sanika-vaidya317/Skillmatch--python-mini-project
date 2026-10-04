@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% from "macros/icons.html" import icon %}
+{% set registering = mode == "register" %}
+{% block title %}{{ "Create an account" if registering else "Sign in" }} · SkillMatch{% endblock %}
+{% block content %}
+<main class="auth-shell">
+  <div class="auth-image">
+    <div class="auth-caption">
+      <span class="eyebrow">MIT-WPU · CAMPUS LIFE, MATCHED</span>
+      <h1>Make your mark<br><em>on campus.</em></h1>
+      <p>Find meaningful ways to contribute, meet your people, and leave every event better than you found it.</p>
+    </div>
+  </div>
+  <section class="auth-panel">
+    <div class="brand">
+      <span class="brand-mark">{{ icon("sparkles", 17) }}</span>
+      <span>skill<span>match</span></span>
+    </div>
+    <div class="auth-copy">
+      <span class="eyebrow">WELCOME BACK</span>
+      <h2>{{ "Join the campus network." if registering else "Your next contribution starts here." }}</h2>
+      <p>{{ "Create a student profile and find your fit." if registering else "Sign in to discover events built for your strengths." }}</p>
+    </div>
+    <form action="/{{ mode }}" method="post" data-testid="auth-form">
+      {% if registering %}
+      <label>Full name
+        <input name="name" data-testid="register-name-input" value="{{ form.get('name', '') }}" placeholder="Alex Johnson" minlength="2" maxlength="80" required>
+      </label>
+      <label>Department
+        <input name="department" data-testid="register-department-input" value="{{ form.get('department', '') }}" placeholder="Computer Science" minlength="2" maxlength="80" required>
+      </label>
+      <label>Role
+        <select name="role" data-testid="register-role-select">
+          <option value="volunteer"{% if form.get('role', 'volunteer') == 'volunteer' %} selected{% endif %}>Student volunteer</option>
+          <option value="organizer"{% if form.get('role') == 'organizer' %} selected{% endif %}>Event organizer</option>
+        </select>
+      </label>
+      <label>Skills (comma separated)
+        <input name="skills" data-testid="register-skills-input" value="{{ form.get('skills', 'Python, Design') }}" placeholder="Python, Design, Photography">
+      </label>
+      {% endif %}
+      <label>Username
+        <input name="username" data-testid="auth-username-input" value="{{ form.get('username', 'maya') }}" placeholder="e.g. maya" minlength="2" maxlength="40" required>
+      </label>
+      <label>Password
+        <input name="password" type="password" data-testid="auth-password-input" value="{{ '' if registering else 'maya1234' }}" minlength="4" maxlength="100" placeholder="••••••••" required>
+      </label>
+      {% if error %}<p class="form-error" data-testid="auth-error">{{ error }}</p>{% endif %}
+      <button class="primary-btn full" data-testid="auth-submit-button">
+        {{ "Create my profile" if registering else "Enter SkillMatch" }} {{ icon("chevron-right", 17) }}
+      </button>
+    </form>
+    <a class="text-btn" data-testid="auth-mode-toggle" href="/{{ 'login' if registering else 'register' }}">
+      {{ "Already have an account? Sign in" if registering else "New to SkillMatch? Create an account" }}
+    </a>
+    <p class="demo-hint">Demo access: <b>maya / maya1234</b> · organizer: <b>campusadmin / admin1234</b></p>
+  </section>
+</main>
+{% endblock %}

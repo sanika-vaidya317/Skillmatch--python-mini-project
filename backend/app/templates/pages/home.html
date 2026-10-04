@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Discover · SkillMatch{% endblock %}
+{% block content %}
+<section class="welcome">
+  <div>
+    <span class="eyebrow">PHASE 1 FOUNDATION</span>
+    <h1>Welcome back,<br><em>{{ current_user.name.split()[0] }}.</em></h1>
+    <p>Signed in to SkillMatch as {{ "event organizer" if current_user.role == "organizer" else "student volunteer" }}.</p>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,11 @@
+fastapi
+uvicorn[standard]
+motor
+pydantic
+PyJWT
+bcrypt
+reportlab
+python-dotenv
+jinja2
+python-multipart
+email-validator
